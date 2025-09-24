@@ -1,0 +1,14 @@
+C:\Repository\Jarkom\Project-1\ChatClient\bin\Debug\net9.0-windows\ChatClient.exe
+C:\Repository\Jarkom\Project-1\ChatClient\bin\Debug\net9.0-windows\ChatClient.deps.json
+C:\Repository\Jarkom\Project-1\ChatClient\bin\Debug\net9.0-windows\ChatClient.runtimeconfig.json
+C:\Repository\Jarkom\Project-1\ChatClient\bin\Debug\net9.0-windows\ChatClient.dll
+C:\Repository\Jarkom\Project-1\ChatClient\bin\Debug\net9.0-windows\ChatClient.pdb
+C:\Repository\Jarkom\Project-1\ChatClient\obj\Debug\net9.0-windows\ChatClient.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repository\Jarkom\Project-1\ChatClient\obj\Debug\net9.0-windows\ChatClient.AssemblyInfoInputs.cache
+C:\Repository\Jarkom\Project-1\ChatClient\obj\Debug\net9.0-windows\ChatClient.AssemblyInfo.cs
+C:\Repository\Jarkom\Project-1\ChatClient\obj\Debug\net9.0-windows\ChatClient.csproj.CoreCompileInputs.cache
+C:\Repository\Jarkom\Project-1\ChatClient\obj\Debug\net9.0-windows\ChatClient.dll
+C:\Repository\Jarkom\Project-1\ChatClient\obj\Debug\net9.0-windows\refint\ChatClient.dll
+C:\Repository\Jarkom\Project-1\ChatClient\obj\Debug\net9.0-windows\ChatClient.pdb
+C:\Repository\Jarkom\Project-1\ChatClient\obj\Debug\net9.0-windows\ChatClient.genruntimeconfig.cache
+C:\Repository\Jarkom\Project-1\ChatClient\obj\Debug\net9.0-windows\ref\ChatClient.dll

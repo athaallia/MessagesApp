@@ -1,0 +1,14 @@
+C:\Repository\Jarkom\Project-1\ChatServer\obj\Debug\net9.0\ChatServer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repository\Jarkom\Project-1\ChatServer\obj\Debug\net9.0\ChatServer.AssemblyInfoInputs.cache
+C:\Repository\Jarkom\Project-1\ChatServer\obj\Debug\net9.0\ChatServer.AssemblyInfo.cs
+C:\Repository\Jarkom\Project-1\ChatServer\obj\Debug\net9.0\ChatServer.csproj.CoreCompileInputs.cache
+C:\Repository\Jarkom\Project-1\ChatServer\bin\Debug\net9.0\ChatServer.exe
+C:\Repository\Jarkom\Project-1\ChatServer\bin\Debug\net9.0\ChatServer.deps.json
+C:\Repository\Jarkom\Project-1\ChatServer\bin\Debug\net9.0\ChatServer.runtimeconfig.json
+C:\Repository\Jarkom\Project-1\ChatServer\bin\Debug\net9.0\ChatServer.dll
+C:\Repository\Jarkom\Project-1\ChatServer\bin\Debug\net9.0\ChatServer.pdb
+C:\Repository\Jarkom\Project-1\ChatServer\obj\Debug\net9.0\ChatServer.dll
+C:\Repository\Jarkom\Project-1\ChatServer\obj\Debug\net9.0\refint\ChatServer.dll
+C:\Repository\Jarkom\Project-1\ChatServer\obj\Debug\net9.0\ChatServer.pdb
+C:\Repository\Jarkom\Project-1\ChatServer\obj\Debug\net9.0\ChatServer.genruntimeconfig.cache
+C:\Repository\Jarkom\Project-1\ChatServer\obj\Debug\net9.0\ref\ChatServer.dll
