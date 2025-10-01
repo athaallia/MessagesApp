@@ -6,28 +6,42 @@ namespace ChatClient
 {
     public class ChatForm : Form
     {
+        private TextBox txtIp;
+        private TextBox txtPort;
         private TextBox txtUser;
         private Button btnConnect;
+        private Button btnDisconnect;
+
         private ListBox lstUsers;
         private FlowLayoutPanel chatPanel;
         private TextBox txtMessage;
         private Button btnSend;
-
+        private CheckBox chkDarkMode;
         private NetworkClient? _client;
 
         public ChatForm()
         {
             this.Text = "Messages App";
-            this.Width = 800;
+            this.Width = 900;
             this.Height = 600;
             this.BackColor = Color.White;
 
-            // ===== Input User + Connect (Top Bar) =====
-            txtUser = new TextBox { Left = 10, Top = 10, Width = 150, Text = "Your name" };
-            btnConnect = new Button { Left = 170, Top = 10, Width = 80, Text = "Join" };
+            // ===== Input User + IP/Port + Connect/Disconnect =====
+            txtIp = new TextBox { Left = 10, Top = 10, Width = 120, Text = "127.0.0.1" };
+            txtPort = new TextBox { Left = 140, Top = 10, Width = 60, Text = "8888" };
+            txtUser = new TextBox { Left = 210, Top = 10, Width = 120, Text = "Your name" };
+
+            btnConnect = new Button { Left = 340, Top = 10, Width = 80, Text = "Connect" };
+            btnDisconnect = new Button { Left = 430, Top = 10, Width = 90, Text = "Disconnect", Enabled = false };
+
             btnConnect.Click += BtnConnect_Click;
+            btnDisconnect.Click += BtnDisconnect_Click;
+
+            this.Controls.Add(txtIp);
+            this.Controls.Add(txtPort);
             this.Controls.Add(txtUser);
             this.Controls.Add(btnConnect);
+            this.Controls.Add(btnDisconnect);
 
             // ===== Left Panel: Members =====
             var lblMembers = new Label
@@ -55,7 +69,7 @@ namespace ChatClient
             {
                 Left = 220,
                 Top = 50,
-                Width = 550,
+                Width = 650,
                 Height = 450,
                 AutoScroll = true,
                 FlowDirection = FlowDirection.TopDown,
@@ -69,12 +83,12 @@ namespace ChatClient
             {
                 Left = 10,
                 Top = 530,
-                Width = 680,
+                Width = 780,
                 Height = 25
             };
             btnSend = new Button
             {
-                Left = 700,
+                Left = 800,
                 Top = 530,
                 Width = 70,
                 Height = 25,
@@ -84,20 +98,58 @@ namespace ChatClient
 
             this.Controls.Add(txtMessage);
             this.Controls.Add(btnSend);
+
+            chkDarkMode = new CheckBox
+            {
+                Left = 10,
+                Top = 508,
+                Width = 120,
+                Text = "Dark Mode"
+            };
+
+            chkDarkMode.CheckedChanged += (s, e) => ToggleTheme(chkDarkMode.Checked);
+            this.Controls.Add(chkDarkMode);
+
         }
 
+        // === Event Connect ===
         private async void BtnConnect_Click(object? sender, EventArgs e)
         {
-            string host = "127.0.0.1"; // IP default
-            int port = 8888;
+            try
+            {
+                string ip = txtIp.Text;
+                int port = int.Parse(txtPort.Text);
 
-            _client = new NetworkClient(txtUser.Text);
-            _client.MessageReceived += Client_MessageReceived;
-            await _client.ConnectAsync(host, port);
+                _client = new NetworkClient(txtUser.Text);
+                _client.MessageReceived += Client_MessageReceived;
+                await _client.ConnectAsync(ip, port);
 
-            AppendChat("System", "Connected to server");
+                AddBubble("System", $"Connected to {ip}:{port}");
+
+                btnConnect.Enabled = false;
+                btnDisconnect.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                AddBubble("System", $"Error: {ex.Message}");
+            }
         }
 
+        // === Event Disconnect ===
+        private async void BtnDisconnect_Click(object? sender, EventArgs e)
+        {
+            if (_client != null)
+            {
+                await _client.DisconnectAsync();
+                AddBubble("System", "Disconnected from server");
+            }
+
+            btnConnect.Enabled = true;
+            btnDisconnect.Enabled = false;
+        }
+
+
+        // === Event Send ===
         private async void BtnSend_Click(object? sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtMessage.Text) || _client == null)
@@ -123,6 +175,7 @@ namespace ChatClient
             txtMessage.Clear();
         }
 
+        // === Receive handler ===
         private void Client_MessageReceived(object? sender, ChatMessage msg)
         {
             this.Invoke(new Action(() =>
@@ -134,7 +187,7 @@ namespace ChatClient
             }));
         }
 
-        // ===== Add Bubble to Chat Panel =====
+        // === Add Bubble to Chat Panel ===
         private void AddBubble(string user, string message, bool isOwnMessage = false)
         {
             var bubble = new Panel
@@ -143,10 +196,9 @@ namespace ChatClient
                 Padding = new Padding(10),
                 Margin = new Padding(5),
                 BackColor = isOwnMessage ? Color.LightGray : Color.White,
-                MaximumSize = new Size(400, 0)
+                MaximumSize = new Size(500, 0)
             };
 
-            // User name
             var lblUser = new Label
             {
                 AutoSize = true,
@@ -155,11 +207,10 @@ namespace ChatClient
                 Text = user
             };
 
-            // Message
             var lblMsg = new Label
             {
                 AutoSize = true,
-                MaximumSize = new Size(380, 0),
+                MaximumSize = new Size(480, 0),
                 Text = message,
                 Font = new Font("Segoe UI", 10),
             };
@@ -168,7 +219,6 @@ namespace ChatClient
             bubble.Controls.Add(lblMsg);
             lblMsg.Top = lblUser.Bottom + 2;
 
-            // Align bubble kanan kalau own message
             if (isOwnMessage)
                 bubble.Anchor = AnchorStyles.Right;
 
@@ -181,5 +231,28 @@ namespace ChatClient
             bool isOwn = (user == txtUser.Text);
             AddBubble(user, message, isOwn);
         }
+
+        private void ToggleTheme(bool dark)
+        {
+            if (dark)
+            {
+                this.BackColor = Color.Black;
+                chatPanel.BackColor = Color.DimGray;
+                txtMessage.BackColor = Color.Black;
+                txtMessage.ForeColor = Color.White;
+                lstUsers.BackColor = Color.Black;
+                lstUsers.ForeColor = Color.White;
+            }
+            else
+            {
+                this.BackColor = Color.White;
+                chatPanel.BackColor = Color.WhiteSmoke;
+                txtMessage.BackColor = Color.White;
+                txtMessage.ForeColor = Color.Black;
+                lstUsers.BackColor = Color.White;
+                lstUsers.ForeColor = Color.Black;
+            }
+        }
+
     }
 }

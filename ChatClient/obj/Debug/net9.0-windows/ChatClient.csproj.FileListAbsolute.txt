@@ -12,3 +12,18 @@ C:\Repository\Jarkom\Project-1\ChatClient\obj\Debug\net9.0-windows\refint\ChatCl
 C:\Repository\Jarkom\Project-1\ChatClient\obj\Debug\net9.0-windows\ChatClient.pdb
 C:\Repository\Jarkom\Project-1\ChatClient\obj\Debug\net9.0-windows\ChatClient.genruntimeconfig.cache
 C:\Repository\Jarkom\Project-1\ChatClient\obj\Debug\net9.0-windows\ref\ChatClient.dll
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\bin\Debug\net9.0-windows\ChatClient.exe
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\bin\Debug\net9.0-windows\ChatClient.deps.json
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\bin\Debug\net9.0-windows\ChatClient.runtimeconfig.json
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\bin\Debug\net9.0-windows\ChatClient.dll
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\bin\Debug\net9.0-windows\ChatClient.pdb
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\obj\Debug\net9.0-windows\ChatClient.GeneratedMSBuildEditorConfig.editorconfig
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\obj\Debug\net9.0-windows\ChatClient.AssemblyInfoInputs.cache
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\obj\Debug\net9.0-windows\ChatClient.AssemblyInfo.cs
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\obj\Debug\net9.0-windows\ChatClient.csproj.CoreCompileInputs.cache
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\obj\Debug\net9.0-windows\ChatClient.sourcelink.json
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\obj\Debug\net9.0-windows\ChatClient.dll
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\obj\Debug\net9.0-windows\refint\ChatClient.dll
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\obj\Debug\net9.0-windows\ChatClient.pdb
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\obj\Debug\net9.0-windows\ChatClient.genruntimeconfig.cache
+D:\Tugas\Semester 5\Pemrograman Jaringan Komputer\MessagesApp\ChatClient\obj\Debug\net9.0-windows\ref\ChatClient.dll

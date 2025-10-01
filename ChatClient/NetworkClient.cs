@@ -38,6 +38,24 @@ namespace ChatClient
             _ = Task.Run(ReceiveLoop); // start background receiver
         }
 
+       public async Task DisconnectAsync()
+        {
+            try
+            {
+                if (_writer != null)
+                {
+            var leave = new ChatMessage { Type = "leave", From = Username, Text = "", Ts = Now() };
+            await _writer.WriteLineAsync(JsonSerializer.Serialize(leave));
+                }
+            }
+            catch { }
+
+            _writer?.Dispose();
+            _reader?.Dispose();
+            _client?.Close();
+        }
+
+
         public async Task SendAsync(string text)
         {
             if (_writer == null) return;

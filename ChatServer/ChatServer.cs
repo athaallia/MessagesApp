@@ -46,8 +46,10 @@ namespace ChatServer
 
                 // join
                 var joinLine = await reader.ReadLineAsync();
+                if (string.IsNullOrEmpty(joinLine)) return;
+
                 var joinMsg = JsonSerializer.Deserialize<ChatMessage>(joinLine);
-                if (joinMsg?.Type != "join")
+                if (joinMsg?.Type != "join" || string.IsNullOrEmpty(joinMsg.From))
                 {
                     return;
                 }
@@ -67,16 +69,17 @@ namespace ChatServer
                 while (true)
                 {
                     var line = await reader.ReadLineAsync();
-                    if (line == null) break;
+                    if (string.IsNullOrEmpty(line)) break;
 
                     var msg = JsonSerializer.Deserialize<ChatMessage>(line);
                     if (msg == null) continue;
+
                     msg.From = username;
                     msg.Ts = Now();
 
                     if (msg.Type == "msg")
                         await BroadcastAsync(msg);
-                    else if (msg.Type == "pm")
+                    else if (msg.Type == "pm" && !string.IsNullOrEmpty(msg.To))
                     {
                         await SendToAsync(msg.To, msg);
                         await SendToAsync(username, msg);
@@ -85,7 +88,7 @@ namespace ChatServer
             }
             finally
             {
-                if (username != null)
+                if (!string.IsNullOrEmpty(username))
                 {
                     _clients.TryRemove(username, out _);
                     await BroadcastAsync(new ChatMessage { Type = "leave", From = username, Text = $"{username} left", Ts = Now() });
@@ -111,13 +114,14 @@ namespace ChatServer
                 catch { }
             }
 
-    // ✅ trigger ke UI Server
-    MessageReceived?.Invoke(this, $"{msg.From}: {msg.Text}");
-}
+            // ✅ trigger ke UI Server
+            MessageReceived?.Invoke(this, $"{msg.From}: {msg.Text}");
+        }
 
-
-        private async Task SendToAsync(string user, ChatMessage msg)
+        private async Task SendToAsync(string? user, ChatMessage msg)
         {
+            if (string.IsNullOrEmpty(user)) return; // cek null agar warning hilang
+
             if (_clients.TryGetValue(user, out var cli))
             {
                 var sw = new StreamWriter(cli.GetStream(), new UTF8Encoding(false), leaveOpen: true) { AutoFlush = true };
@@ -126,8 +130,7 @@ namespace ChatServer
         }
 
         private static long Now() => DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        
-        public event EventHandler<string>? MessageReceived;
 
+        public event EventHandler<string>? MessageReceived;
     }
 }

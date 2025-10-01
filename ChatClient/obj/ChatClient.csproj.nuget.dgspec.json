@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Repository\\Jarkom\\Project-1\\ChatClient\\ChatClient.csproj": {}
+    "D:\\Tugas\\Semester 5\\Pemrograman Jaringan Komputer\\MessagesApp\\ChatClient\\ChatClient.csproj": {}
   },
   "projects": {
-    "C:\\Repository\\Jarkom\\Project-1\\ChatClient\\ChatClient.csproj": {
+    "D:\\Tugas\\Semester 5\\Pemrograman Jaringan Komputer\\MessagesApp\\ChatClient\\ChatClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Repository\\Jarkom\\Project-1\\ChatClient\\ChatClient.csproj",
+        "projectUniqueName": "D:\\Tugas\\Semester 5\\Pemrograman Jaringan Komputer\\MessagesApp\\ChatClient\\ChatClient.csproj",
         "projectName": "ChatClient",
-        "projectPath": "C:\\Repository\\Jarkom\\Project-1\\ChatClient\\ChatClient.csproj",
-        "packagesPath": "C:\\Users\\athal\\.nuget\\packages\\",
-        "outputPath": "C:\\Repository\\Jarkom\\Project-1\\ChatClient\\obj\\",
+        "projectPath": "D:\\Tugas\\Semester 5\\Pemrograman Jaringan Komputer\\MessagesApp\\ChatClient\\ChatClient.csproj",
+        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
+        "outputPath": "D:\\Tugas\\Semester 5\\Pemrograman Jaringan Komputer\\MessagesApp\\ChatClient\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\athal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,7 +40,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0-windows7.0": {
@@ -64,7 +64,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
