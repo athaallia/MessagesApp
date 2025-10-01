@@ -17,7 +17,10 @@ namespace ChatClient
         private TextBox txtMessage;
         private Button btnSend;
         private CheckBox chkDarkMode;
+        private Label lblMembers;
         private NetworkClient? _client;
+
+        private bool darkMode = false;
 
         public ChatForm()
         {
@@ -44,7 +47,7 @@ namespace ChatClient
             this.Controls.Add(btnDisconnect);
 
             // ===== Left Panel: Members =====
-            var lblMembers = new Label
+            lblMembers = new Label
             {
                 Left = 10,
                 Top = 50,
@@ -148,7 +151,6 @@ namespace ChatClient
             btnDisconnect.Enabled = false;
         }
 
-
         // === Event Send ===
         private async void BtnSend_Click(object? sender, EventArgs e)
         {
@@ -195,7 +197,6 @@ namespace ChatClient
                 AutoSize = true,
                 Padding = new Padding(10),
                 Margin = new Padding(5),
-                BackColor = isOwnMessage ? Color.LightGray : Color.White,
                 MaximumSize = new Size(500, 0)
             };
 
@@ -203,7 +204,6 @@ namespace ChatClient
             {
                 AutoSize = true,
                 Font = new Font("Segoe UI", 8, FontStyle.Bold),
-                ForeColor = Color.DimGray,
                 Text = user
             };
 
@@ -214,6 +214,20 @@ namespace ChatClient
                 Text = message,
                 Font = new Font("Segoe UI", 10),
             };
+
+            // 🎨 Sesuaikan warna dengan tema
+            if (darkMode)
+            {
+                bubble.BackColor = isOwnMessage ? Color.FromArgb(80, 80, 80) : Color.FromArgb(60, 60, 60);
+                lblUser.ForeColor = Color.LightGray;
+                lblMsg.ForeColor = Color.WhiteSmoke;
+            }
+            else
+            {
+                bubble.BackColor = isOwnMessage ? Color.LightGray : Color.White;
+                lblUser.ForeColor = Color.DimGray;
+                lblMsg.ForeColor = Color.Black;
+            }
 
             bubble.Controls.Add(lblUser);
             bubble.Controls.Add(lblMsg);
@@ -234,14 +248,24 @@ namespace ChatClient
 
         private void ToggleTheme(bool dark)
         {
+            darkMode = dark;
+
             if (dark)
             {
                 this.BackColor = Color.Black;
-                chatPanel.BackColor = Color.DimGray;
+                chatPanel.BackColor = Color.FromArgb(30, 30, 30);
                 txtMessage.BackColor = Color.Black;
                 txtMessage.ForeColor = Color.White;
                 lstUsers.BackColor = Color.Black;
                 lstUsers.ForeColor = Color.White;
+                lblMembers.ForeColor = Color.White;
+                chkDarkMode.ForeColor = Color.White;
+                btnConnect.BackColor = Color.FromArgb(50, 50, 50);
+                btnConnect.ForeColor = Color.White;
+                btnDisconnect.BackColor = Color.FromArgb(50, 50, 50);
+                btnDisconnect.ForeColor = Color.White;
+                btnSend.BackColor = Color.FromArgb(50, 50, 50);
+                btnSend.ForeColor = Color.White;
             }
             else
             {
@@ -251,6 +275,38 @@ namespace ChatClient
                 txtMessage.ForeColor = Color.Black;
                 lstUsers.BackColor = Color.White;
                 lstUsers.ForeColor = Color.Black;
+                lblMembers.ForeColor = Color.Black;
+                chkDarkMode.ForeColor = Color.Black;
+                btnConnect.BackColor = SystemColors.Control;
+                btnConnect.ForeColor = Color.Black;
+                btnDisconnect.BackColor = SystemColors.Control;
+                btnDisconnect.ForeColor = Color.Black;
+                btnSend.BackColor = SystemColors.Control;
+                btnSend.ForeColor = Color.Black;
+            }
+
+            // 🔄 Update bubble lama juga
+            foreach (Control bubble in chatPanel.Controls)
+            {
+                if (bubble is Panel panel)
+                {
+                    var lbls = panel.Controls;
+                    var lblUser = lbls[0] as Label;
+                    var lblMsg = lbls[1] as Label;
+
+                    if (dark)
+                    {
+                        panel.BackColor = Color.FromArgb(60, 60, 60);
+                        if (lblUser != null) lblUser.ForeColor = Color.LightGray;
+                        if (lblMsg != null) lblMsg.ForeColor = Color.WhiteSmoke;
+                    }
+                    else
+                    {
+                        panel.BackColor = Color.White;
+                        if (lblUser != null) lblUser.ForeColor = Color.DimGray;
+                        if (lblMsg != null) lblMsg.ForeColor = Color.Black;
+                    }
+                }
             }
         }
 
