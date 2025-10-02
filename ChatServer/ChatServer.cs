@@ -23,10 +23,28 @@ namespace ChatServer
         private TcpListener? _listener;
         private readonly ConcurrentDictionary<string, TcpClient> _clients = new();
 
+        // ===== Logging =====
+        private readonly string logFile = "server.log";
+        private void Log(string message)
+        {
+            string logEntry = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}";
+            Console.WriteLine(logEntry);
+            try
+            {
+                File.AppendAllText(logFile, logEntry + Environment.NewLine);
+            }
+            catch
+            {
+                // ignore error menulis file log
+            }
+        }
+
         public async Task StartAsync(int port)
         {
             _listener = new TcpListener(IPAddress.Any, port);
             _listener.Start();
+
+            Log($"=== TCP Chat Server started on port {port} ===");
 
             while (true)
             {
@@ -50,20 +68,31 @@ namespace ChatServer
 
                 var joinMsg = JsonSerializer.Deserialize<ChatMessage>(joinLine);
                 if (joinMsg?.Type != "join" || string.IsNullOrEmpty(joinMsg.From))
-                {
                     return;
-                }
+
                 username = joinMsg.From;
 
                 if (!_clients.TryAdd(username, client))
                 {
                     await writer.WriteLineAsync(JsonSerializer.Serialize(
                         new ChatMessage { Type = "sys", From = "Server", Text = "Username taken", Ts = Now() }));
+                    Log($"[SYSTEM] Username '{username}' already taken.");
                     return;
                 }
 
-                Console.WriteLine($"[SERVER] {username} joined");
+                // --- Informasi join & broadcast ---
+                Log($"[SERVER] {username} joined");
                 await BroadcastAsync(new ChatMessage { Type = "join", From = username, Text = $"{username} joined", Ts = Now() });
+
+                // --- Kirim daftar user online ke client baru ---
+                var currentUsers = _clients.Keys;
+                await SendToAsync(username, new ChatMessage
+                {
+                    Type = "sys",
+                    From = "Server",
+                    Text = string.Join(",", currentUsers),
+                    Ts = Now()
+                });
 
                 // main loop
                 while (true)
@@ -78,13 +107,21 @@ namespace ChatServer
                     msg.Ts = Now();
 
                     if (msg.Type == "msg")
+                    {
                         await BroadcastAsync(msg);
+                        Log($"[MSG] {username}: {msg.Text}");
+                    }
                     else if (msg.Type == "pm" && !string.IsNullOrEmpty(msg.To))
                     {
                         await SendToAsync(msg.To, msg);
                         await SendToAsync(username, msg);
+                        Log($"[PM] {username} -> {msg.To}: {msg.Text}");
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Log($"[ERROR] {username}: {ex.Message}");
             }
             finally
             {
@@ -92,6 +129,7 @@ namespace ChatServer
                 {
                     _clients.TryRemove(username, out _);
                     await BroadcastAsync(new ChatMessage { Type = "leave", From = username, Text = $"{username} left", Ts = Now() });
+                    Log($"[SERVER] {username} left");
                 }
                 client.Close();
             }
@@ -114,13 +152,13 @@ namespace ChatServer
                 catch { }
             }
 
-            // ✅ trigger ke UI Server
+            // trigger ke UI Server jika ada
             MessageReceived?.Invoke(this, $"{msg.From}: {msg.Text}");
         }
 
         private async Task SendToAsync(string? user, ChatMessage msg)
         {
-            if (string.IsNullOrEmpty(user)) return; // cek null agar warning hilang
+            if (string.IsNullOrEmpty(user)) return;
 
             if (_clients.TryGetValue(user, out var cli))
             {

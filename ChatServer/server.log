@@ -1,0 +1,44 @@
+[2025-10-02 07:01:09] === TCP Chat Server started on port 8888 ===
+[2025-10-02 07:01:44] [SERVER] Your name joined
+[2025-10-02 07:02:07] [MSG] Your name: haloo
+[2025-10-02 07:02:18] [MSG] Your name: hai
+[2025-10-02 07:02:21] [SERVER] Your name left
+[2025-10-02 07:04:12] === TCP Chat Server started on port 8888 ===
+[2025-10-02 07:04:28] [SERVER] Asaa joined
+[2025-10-02 07:04:57] [SERVER] Ana joined
+[2025-10-02 07:05:10] [MSG] Asaa: halo
+[2025-10-02 07:05:17] [MSG] Asaa: hai
+[2025-10-02 07:05:30] [MSG] Ana: olaaa
+[2025-10-02 07:05:43] [SERVER] Asaa left
+[2025-10-02 07:05:52] [SERVER] Asaa joined
+[2025-10-02 07:05:55] [SERVER] Asaa left
+[2025-10-02 07:06:09] [ERROR] Ana: Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host..
+[2025-10-02 07:06:09] [SERVER] Ana left
+[2025-10-02 07:12:47] === TCP Chat Server started on port 8888 ===
+[2025-10-02 07:13:05] [SERVER] Your name joined
+[2025-10-02 07:13:20] [SERVER] Nana joined
+[2025-10-02 07:13:38] [SERVER] Your name left
+[2025-10-02 07:13:41] [SERVER] Nana left
+[2025-10-02 08:18:15] === TCP Chat Server started on port 8888 ===
+[2025-10-02 08:18:46] [SERVER] Sasa joined
+[2025-10-02 08:19:09] [SERVER] Yonia joined
+[2025-10-02 08:19:23] [SERVER] Yonia left
+[2025-10-02 08:19:28] [ERROR] Sasa: Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host..
+[2025-10-02 08:19:28] [SERVER] Sasa left
+[2025-10-02 08:23:07] [SERVER] Your name joined
+[2025-10-02 08:23:25] [SERVER] Lala joined
+[2025-10-02 08:23:50] [SERVER] Lala left
+[2025-10-02 08:23:54] [ERROR] Your name: Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host..
+[2025-10-02 08:23:54] [SERVER] Your name left
+[2025-10-02 08:25:56] === TCP Chat Server started on port 8888 ===
+[2025-10-02 08:26:06] [SERVER] Your name joined
+[2025-10-02 08:26:22] [SERVER] 12$% joined
+[2025-10-02 08:26:34] [MSG] 12$%: haloo
+[2025-10-02 08:26:57] [SERVER] Youri joined
+[2025-10-02 08:27:22] [PM] Youri -> Your: Name Halo halo
+[2025-10-02 08:27:39] [ERROR] 12$%: Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host..
+[2025-10-02 08:27:39] [SERVER] 12$% left
+[2025-10-02 08:27:40] [ERROR] Youri: Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host..
+[2025-10-02 08:27:40] [SERVER] Youri left
+[2025-10-02 08:27:43] [ERROR] Your name: Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host..
+[2025-10-02 08:27:43] [SERVER] Your name left

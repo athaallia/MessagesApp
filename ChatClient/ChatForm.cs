@@ -112,7 +112,6 @@ namespace ChatClient
 
             chkDarkMode.CheckedChanged += (s, e) => ToggleTheme(chkDarkMode.Checked);
             this.Controls.Add(chkDarkMode);
-
         }
 
         // === Event Connect ===
@@ -127,14 +126,14 @@ namespace ChatClient
                 _client.MessageReceived += Client_MessageReceived;
                 await _client.ConnectAsync(ip, port);
 
-                AddBubble("System", $"Connected to {ip}:{port}");
+                AddBubble("System", $"Connected to {ip}:{port}", Now());
 
                 btnConnect.Enabled = false;
                 btnDisconnect.Enabled = true;
             }
             catch (Exception ex)
             {
-                AddBubble("System", $"Error: {ex.Message}");
+                AddBubble("System", $"Error: {ex.Message}", Now());
             }
         }
 
@@ -144,7 +143,7 @@ namespace ChatClient
             if (_client != null)
             {
                 await _client.DisconnectAsync();
-                AddBubble("System", "Disconnected from server");
+                AddBubble("System", "Disconnected from server", Now());
             }
 
             btnConnect.Enabled = true;
@@ -182,15 +181,40 @@ namespace ChatClient
         {
             this.Invoke(new Action(() =>
             {
-                AppendChat(msg.From, msg.Text);
+                // Tampilkan chat
+                AppendChat(msg.From, msg.Text, msg.Ts);
 
-                if (!lstUsers.Items.Contains(msg.From))
-                    lstUsers.Items.Add(msg.From);
+                // Update daftar member
+                if (msg.Type == "sys")
+                {
+                    if (msg.Type == "sys" && msg.Text != null)
+                    {       
+                        lstUsers.Items.Clear();
+                        var users = msg.Text.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var u in users)
+                            lstUsers.Items.Add(u);
+                    }
+                }
+                else if (msg.Type == "join")
+                {
+                    if (!lstUsers.Items.Contains(msg.From))
+                        lstUsers.Items.Add(msg.From);
+                }
+                else if (msg.Type == "leave")
+                {
+                    if (lstUsers.Items.Contains(msg.From))
+                        lstUsers.Items.Remove(msg.From);
+                }
+                else
+                {
+                    if (!lstUsers.Items.Contains(msg.From))
+                        lstUsers.Items.Add(msg.From);
+                }
             }));
         }
 
-        // === Add Bubble to Chat Panel ===
-        private void AddBubble(string user, string message, bool isOwnMessage = false)
+        // === Add Bubble to Chat Panel with timestamp ===
+        private void AddBubble(string user, string message, long ts = 0, bool isOwnMessage = false)
         {
             var bubble = new Panel
             {
@@ -207,15 +231,16 @@ namespace ChatClient
                 Text = user
             };
 
+            string timeText = ts > 0 ? $"[{DateTimeOffset.FromUnixTimeSeconds(ts).ToLocalTime():HH:mm}]" : "";
             var lblMsg = new Label
             {
                 AutoSize = true,
                 MaximumSize = new Size(480, 0),
-                Text = message,
+                Text = $"{timeText} {message}",
                 Font = new Font("Segoe UI", 10),
             };
 
-            // 🎨 Sesuaikan warna dengan tema
+            // warna sesuai tema
             if (darkMode)
             {
                 bubble.BackColor = isOwnMessage ? Color.FromArgb(80, 80, 80) : Color.FromArgb(60, 60, 60);
@@ -240,12 +265,13 @@ namespace ChatClient
             chatPanel.ScrollControlIntoView(bubble);
         }
 
-        private void AppendChat(string user, string message)
+        private void AppendChat(string user, string message, long ts = 0)
         {
             bool isOwn = (user == txtUser.Text);
-            AddBubble(user, message, isOwn);
+            AddBubble(user, message, ts, isOwn);
         }
 
+        // === Toggle Light/Dark Theme ===
         private void ToggleTheme(bool dark)
         {
             darkMode = dark;
@@ -285,7 +311,7 @@ namespace ChatClient
                 btnSend.ForeColor = Color.Black;
             }
 
-            // 🔄 Update bubble lama juga
+            // update bubble lama juga
             foreach (Control bubble in chatPanel.Controls)
             {
                 if (bubble is Panel panel)
@@ -310,5 +336,6 @@ namespace ChatClient
             }
         }
 
+        private long Now() => DateTimeOffset.UtcNow.ToUnixTimeSeconds();
     }
 }
